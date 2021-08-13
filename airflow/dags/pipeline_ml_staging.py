@@ -24,7 +24,7 @@ git --git-dir=/tmp/purchase_predict_2/.git --work-tree=/tmp/purchase_predict_2 c
 tar -C /tmp/purchase_predict_2 -zcf /tmp/purchase_predict_2.tar.gz .
 gcloud builds submit \
 --config /tmp/purchase_predict_2/cloudbuild.yaml /tmp/purchase_predict_2.tar.gz \
---substitutions SHORT_SHA=$SHORT_SHA, _MLFLOW_SERVER=$_MLFLOW_SERVER, BRANCH_NAME=staging
+--substitutions SHORT_SHA=$SHORT_SHA,_MLFLOW_SERVER=$_MLFLOW_SERVER,BRANCH_NAME=staging
 """
 
 DAG_NAME = os.path.basename(__file__).replace('.py', '')
