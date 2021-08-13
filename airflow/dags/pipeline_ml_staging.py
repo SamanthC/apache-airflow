@@ -20,10 +20,10 @@ from airflow.providers.google.cloud.operators.cloud_build import (
 
 CLOUD_BUILD_STEP_ARGS= """
 gcloud source repos clone purchase_predict /tmp/purchase_predict --project=$PROJECT_ID
-git --git-dir=/tmp/purchase_predict/.git --work-tree=/tmp/purchase_predict checkout staging
-tar -C /tmp/purchase_predict -zcf /tmp/purchase_predict.tar.gz .
+git --git-dir=/tmp/purchase_predict_2/.git --work-tree=/tmp/purchase_predict_2 checkout staging
+tar -C /tmp/purchase_predict_2 -zcf /tmp/purchase_predict_2.tar.gz .
 gcloud builds submit \
---config /tmp/purchase_predict/cloudbuild.yaml /tmp/purchase_predict.tar.gz \
+--config /tmp/purchase_predict_2/cloudbuild.yaml /tmp/purchase_predict_2.tar.gz \
 --substitutions SHORT_SHA=$SHORT_SHA, _MLFLOW_SERVER=$_MLFLOW_SERVER, BRANCH_NAME=staging
 """
 
