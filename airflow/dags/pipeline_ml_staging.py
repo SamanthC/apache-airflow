@@ -19,7 +19,7 @@ from airflow.providers.google.cloud.operators.cloud_build import (
 )
 
 CLOUD_BUILD_STEP_ARGS= """
-gcloud source repos clone purchase_predict /tmp/purchase_predict --project$PROJECT_ID
+gcloud source repos clone purchase_predict /tmp/purchase_predict --project=$PROJECT_ID
 git --git-dir=/tmp/purchase_predict/.git --work-tree=/tmp/purchase_predict checkout staging
 tar -C /tmp/purchase_predict -zcf /tmp/purchase_predict.tar.gz .
 gcloud builds submit \
