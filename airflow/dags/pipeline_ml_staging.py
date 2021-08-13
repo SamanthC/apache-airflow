@@ -56,7 +56,7 @@ with DAG(DAG_NAME, default_args=default_args, schedule_interval='0 5 * * 1') as 
 	task_job = DataprocSubmitPySparkJobOperator(
 		task_id='submit_job',
 		job_name='query_user_events',
-		cluster_name=CLUSTER_NAME_TEMPLATE + '{{ ds-nodash }}',
+		cluster_name=CLUSTER_NAME_TEMPLATE + '{{ ds_nodash }}',
 		main='gs://{}/scripts/create_events_data_file.py'.format(BUCKET),
 		dataproc_jars=['gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar'],
 		arguments=['{{ ds }}', '{{ next_ds }}']
