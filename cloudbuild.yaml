@@ -1,0 +1,8 @@
+steps:
+- name: 'gcr.io./google.com/cloudsdktool/cloud-sdk'
+  id: Copy DAG to bucket
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+      gsutil cp airflow/dags/* gs://ml-eng-blent/dags
