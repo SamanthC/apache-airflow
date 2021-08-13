@@ -94,7 +94,7 @@ with DAG(DAG_NAME, default_args=default_args, schedule_interval='0 5 * * 1') as 
 				}
 			],
 			"timeout": "1800s",
-			"substitutions": {"_MLFLOW_SERVER": Variale.get("MLFLOW_SERVER"), "SHORT_SHA": str(secrets.token_hex(4))[:7]}
+			"substitutions": {"_MLFLOW_SERVER": Variable.get("MLFLOW_SERVER"), "SHORT_SHA": str(secrets.token_hex(4))[:7]}
 		}
 	)
 
