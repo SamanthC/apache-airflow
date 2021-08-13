@@ -1,4 +1,5 @@
 import os
+import secrets
 
 from airflow import DAG
 from airflow.models import Variable
@@ -12,6 +13,19 @@ from airflow.providers.google.cloud.operators.dataproc import(
 	DataprocDeleteClusterOperator,
 	DataprocSubmitPySparkJobOperator
 )
+
+from airflow.providers.google.cloud.operators.cloud_build import (
+	CloudBuildCreateBuildOperator
+)
+
+CLOUD_BUILD_STEP_ARGS= """
+gcloud source repos clone purchase_predict /tmp/purchase_predict --project$PROJECT_ID
+git --git-dir=/tmp/purchase_predict/.git --work-tree=/tmp/purchase_predict checkout staging
+tar -C /tmp/purchase_predict -zcf /tmp/purchase_predict.tar.gz .
+gcloud builds submit \
+--config /tmp/purchase_predict/cloudbuild.yaml /tmp/purchase_predict.tar.gz \
+--substitutions SHORT_SHA=$SHORT_SHA, _MLFLOW_SERVER=$_MLFLOW_SERVER, BRANCH_NAME=staging
+"""
 
 DAG_NAME = os.path.basename(__file__).replace('.py', '')
 BUCKET = 'ml-eng-blent'
@@ -69,5 +83,20 @@ with DAG(DAG_NAME, default_args=default_args, schedule_interval='0 5 * * 1') as 
 		trigger_rule=trigger_rule.TriggerRule.ALL_DONE
 	)
 
+	task_trigger_build = CloudBuildCreateBuildOperator(
+		task_id="trigger_ml_build",
+		body={
+			"steps": [
+				{
+					"name": "gcr.io/google.com/cloudsdktool/cloud-sdk",
+					"entrypoint": "bash",
+					"args": ["-c", CLOUD_BUILD_STEP_ARGS]
+				}
+			],
+			"timeout": "1800s",
+			"substitutions": {"_MLFLOW_SERVER": Variale.get("MLFLOW_SERVER"), "SHORT_SHA": str(secrets.token_hex(4))[:7]}
+		}
+	)
+
 	task_create_dataproc.set_downstream(task_job)
-	task_job.set_downstream(task_delete_dataproc)
+	task_job.set_downstream([task_delete_dataproc, task_trigger_build])
