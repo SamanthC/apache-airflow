@@ -37,12 +37,12 @@ CLUSTER_CONFIG = {
 	'master_config': {
 		'num_instances': 1,
 		'machine_type_uri': 'n1-standard-2',
-		'disk_config': {'boot_disk_type': 'pd-standard', 'boot_disk_size_gb': 256}
+		'disk_config': {'boot_disk_type': 'pd-standard', 'boot_disk_size_gb': 512}
 	},
 	'worker_config': {
 		'num_instances': 2,
 		'machine_type_uri': 'n1-standard-2',
-		'disk_config': {'boot_disk_type': 'pd-standard', 'boot_disk_size_gb': 256}	
+		'disk_config': {'boot_disk_type': 'pd-standard', 'boot_disk_size_gb': 512}	
 	},
 	'lifecycle_config': {
 		'idle_delete_ttl': Duration(seconds=3600)
