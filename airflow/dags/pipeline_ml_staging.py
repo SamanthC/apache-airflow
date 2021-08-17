@@ -55,7 +55,7 @@ default_args = {
 	'retries': 0,
 	'retry_delay': timedelta(minutes=10),
 	'project_id': Variable.get('PROJECT_ID'),
-	'region': 'europe-west1'
+	'region': 'us-central1'
 }
 
 with DAG(DAG_NAME, default_args=default_args, schedule_interval='0 5 * * 1') as dag:
@@ -63,7 +63,7 @@ with DAG(DAG_NAME, default_args=default_args, schedule_interval='0 5 * * 1') as 
 	task_create_dataproc = DataprocCreateClusterOperator(
 		task_id='create_dataproc',
 		cluster_name=CLUSTER_NAME_TEMPLATE + "{{ ds_nodash }}",
-		region= 'us-central1',
+		region= 'europe-west1',
 		cluster_config=CLUSTER_CONFIG
 	)
 
