@@ -55,7 +55,7 @@ default_args = {
 	'retries': 0,
 	'retry_delay': timedelta(minutes=10),
 	'project_id': Variable.get('PROJECT_ID'),
-	'region': 'us-central1'
+	'region': 'europe-west1'
 }
 
 with DAG(DAG_NAME, default_args=default_args, schedule_interval='0 5 * * 1') as dag:
