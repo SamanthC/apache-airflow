@@ -63,7 +63,7 @@ with DAG(DAG_NAME, default_args=default_args, schedule_interval='0 5 * * 1') as 
 	task_create_dataproc = DataprocCreateClusterOperator(
 		task_id='create_dataproc',
 		cluster_name=CLUSTER_NAME_TEMPLATE + "{{ ds_nodash }}",
-		region= 'europe-west1',
+		region= 'us-central1',
 		cluster_config=CLUSTER_CONFIG
 	)
 
