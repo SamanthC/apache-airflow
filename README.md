@@ -1,4 +1,4 @@
-# apache-airflow
+# Purchase-predict DAG with Apache Airflow
 
 The poject creates the DAG of the whole purchase_predict project flow:
 - loading the latest events on BigQuery
