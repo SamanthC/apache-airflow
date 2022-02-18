@@ -1,8 +1,8 @@
 # Purchase-predict DAG with Apache Airflow
 
-The poject creates the DAG of the whole purchase_predict project flow:
+This project creates the DAG of the whole purchase_predict project flow:
 - loading the latest events on BigQuery
-- processing the data thaks to Dataproc Clusyer
+- processing the data thanks to Dataproc Cluster
 - training and optimizing the LightGBM model
 - deploying it on Mlflow
 - getting access of the latest version from the API
